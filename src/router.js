@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import Podcast from './views/Podcast.vue';
+import Episode from './views/Episode.vue';
 
 Vue.use(Router);
 
@@ -25,9 +27,18 @@ export default new Router({
     {
       path: "/podcast/:id",
       name: "podcast",
-      component: () => {
-        import(/* webpackChunkName: "podcast" */ "./views/Podcast.vue")
-      }
+      // component: () => {
+      //   import(/* webpackChunkName: "podcast" */ "./views/Podcast.vue")
+      // },
+      component: Podcast
+    },
+    {
+      path: "/podcast/:podcastId/episode/:episodeId",
+      name: "episode",
+      // component: () => {
+      //   import(/* webpackChunkName: "episode" */ "./views/Episode.vue")
+      // },
+      component: Episode
     }
   ]
 });
