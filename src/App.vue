@@ -3,7 +3,7 @@
     <div class="header">
       <h1>
         <router-link to="/">Podcaster</router-link>
-        <div class="spinner hidden">
+        <div v-bind:class="{ spinner: true, hidden: !isNavigationActive }">
           <div class="double-bounce1"></div>
           <div class="double-bounce2"></div>
         </div>
@@ -14,6 +14,18 @@
 	</div>
   </div>
 </template>
+
+<script>
+export default {
+	name: 'App',
+	computed: {
+		isNavigationActive() {
+			return this.$store.state.isNavigationActive;
+		}
+	}
+}
+</script>
+
 
 <style lang="css">
 html {

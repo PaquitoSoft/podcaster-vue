@@ -1,7 +1,7 @@
 <template>
     <div class="podcast-summary">
         <div class="box">
-			<router-link :to="{ name: 'podcast', params: { id: podcast.id} }">
+			<router-link :to="{ name: 'podcast', params: { podcastId: podcast.id} }">
                 <div class="box-icon">
                     <img :src="podcast.cover" :alt="podcast.name">
                 </div>

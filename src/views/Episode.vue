@@ -29,19 +29,22 @@ export default {
             currentEpisode: {}
         };
     },
-    created: function() {
-        this.fetchData();
+    beforeRouteEnter(to, from, next) {
+        getPodcastDetail(to.params.podcastId)
+            .then(podcast => {
+                next(vm => vm.setData({
+                    podcast,
+                    currentEpisode: podcast.episodes.find(episode => episode.id === to.params.episodeId)
+                }))
+            })
+            .catch(error => {
+                console.error('Could not load episode details:', error);
+            });
     },
     methods: {
-        fetchData: function() {
-            getPodcastDetail(this.$route.params.podcastId)
-                .then(podcast => {
-                    this.podcast = podcast;
-                    this.currentEpisode = podcast.episodes.find(episode => episode.id === this.$route.params.episodeId);
-                })
-                .catch(error => {
-                    console.error('Could not load episode details:', error);
-                });
+        setData({ podcast, currentEpisode }) {
+            this.podcast = podcast;
+            this.currentEpisode = currentEpisode;
         }
     }
 }

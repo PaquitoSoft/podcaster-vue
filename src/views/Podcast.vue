@@ -43,19 +43,18 @@ export default {
     data: function() {
         return { podcast: { episodes: [] } };
     },
-    created: function() {
-        this.fetchData();
+    beforeRouteEnter(to, from, next) {
+        getPodcastDetail(to.params.podcastId)
+            .then(podcast => {
+                next(vm => vm.setData(podcast));
+            })
+            .catch(error => {
+                console.log('Error loading podcast with ID', to.podcastId, ':', error);
+            });
     },
     methods: {
-        fetchData: function() {
-            console.log('Fetch Data:', this.$route);
-            getPodcastDetail(this.$route.params.id)
-                .then(podcast => {
-                    this.podcast = podcast;
-                })
-                .catch(error => {
-                    console.log('Error loading podcast with ID', this.$route.params.id, ':', error);
-                });
+        setData(podcast) {
+            this.podcast = podcast;
         }
     }
 }
